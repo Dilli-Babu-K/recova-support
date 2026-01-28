@@ -112,19 +112,26 @@ const App: React.FC = () => {
 
         {/* Contact */}
         <Section className="text-center py-16">
-          <div className="bg-neutral-900 rounded-2xl p-8 border border-neutral-800">
+          <div className="bg-neutral-900 rounded-2xl p-8 md:p-12 border border-neutral-800">
             <h2 className="text-2xl font-semibold text-neutral-100 mb-4">Still need help?</h2>
-            <p className="text-neutral-300 mb-6">
+            <p className="text-neutral-300 mb-8 max-w-md mx-auto">
               If you are experiencing issues not covered above, please reach out to our support team. 
               We aim to review all inquiries promptly.
             </p>
+            
             <a 
               href="mailto:recova.app0@gmail.com?subject=Recova%20App%20Support"
-              className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-neutral-950 bg-white hover:bg-neutral-200 transition-colors"
+              className="inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-bold rounded-full text-neutral-950 bg-white hover:bg-neutral-200 transition-colors mb-8"
             >
               Contact Support
             </a>
-            <p className="mt-6 text-xl font-bold text-white tracking-wider select-all">recova.app0@gmail.com</p>
+
+            <div className="mt-4 p-6 bg-neutral-950/50 rounded-xl border border-neutral-800 inline-block w-full max-w-lg">
+              <p className="text-xs text-neutral-500 mb-3 uppercase tracking-widest font-bold">Direct Email</p>
+              <a href="mailto:recova.app0@gmail.com?subject=Recova%20App%20Support" className="text-2xl md:text-3xl font-black text-white tracking-tight hover:text-neutral-200 transition-colors break-all block">
+                recova.app0@gmail.com
+              </a>
+            </div>
           </div>
         </Section>
 
