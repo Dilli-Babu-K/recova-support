@@ -119,13 +119,6 @@ const App: React.FC = () => {
               We aim to review all inquiries promptly.
             </p>
             
-            <a 
-              href="mailto:recova.app0@gmail.com?subject=Recova%20App%20Support"
-              className="inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-bold rounded-full text-neutral-950 bg-white hover:bg-neutral-200 transition-colors mb-8"
-            >
-              Contact Support
-            </a>
-
             <div className="mt-4 p-6 bg-neutral-950/50 rounded-xl border border-neutral-800 inline-block w-full max-w-lg">
               <p className="text-xs text-neutral-500 mb-3 uppercase tracking-widest font-bold">Direct Email</p>
               <a href="mailto:recova.app0@gmail.com?subject=Recova%20App%20Support" className="text-2xl md:text-3xl font-black text-white tracking-tight hover:text-neutral-200 transition-colors break-all block">
