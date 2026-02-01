@@ -61,7 +61,7 @@ const App: React.FC = () => {
           </h1>
           <div className="h-1 w-20 bg-neutral-900 mx-auto rounded-full mb-8"></div>
           <p className="text-lg text-neutral-600 max-w-xl mx-auto leading-relaxed">
-            Recova is a biology recovery tracking app that estimates perceived recovery readiness with training strain and rest using consistent daily logs.
+            Recova is a recovery tracking app that estimates perceived recovery readiness.
           </p>
         </header>
 
@@ -71,7 +71,7 @@ const App: React.FC = () => {
             <div className="bg-white p-6 rounded-xl border border-neutral-200 shadow-sm">
               <h3 className="text-neutral-900 font-medium mb-2">1. Strain</h3>
               <p className="text-sm text-neutral-600">
-                We analyze yesterday's training load and daily stress accumulation to understand the biological cost placed on your body.
+                We analyze yesterday's training load and daily stress accumulation to understand the stress placed on your body.
               </p>
             </div>
             <div className="bg-white p-6 rounded-xl border border-neutral-200 shadow-sm">
@@ -136,7 +136,7 @@ const App: React.FC = () => {
             Always consult a physician before beginning any new exercise program.
           </p>
           <p className="text-xs text-neutral-500 mt-4">
-            &copy; {new Date().getFullYear()} Recova. All rights reserved.
+            &copy; 2026 Recova. All rights reserved.
           </p>
         </footer>
 
