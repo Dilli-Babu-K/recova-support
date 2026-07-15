@@ -1,5 +1,6 @@
 {
   "name": "Recova Support",
   "description": "Official support and documentation page for the Recova app.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
