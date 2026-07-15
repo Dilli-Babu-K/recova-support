@@ -183,18 +183,18 @@ const App: React.FC = () => {
         <div className="grid lg:grid-cols-12 gap-8 items-start mb-20">
           
           {/* Navigation Tabs - Left Side (4 Cols) */}
-          <div className="lg:col-span-4 space-y-3">
-            <div className="text-xs font-bold text-neutral-400 tracking-wider uppercase px-3 mb-2">
+          <div className="lg:col-span-4 space-y-4">
+            <div className="text-xs font-bold text-neutral-400 tracking-wider uppercase px-1 mb-1">
               Categories
             </div>
             
-            <div className="flex flex-row lg:flex-col gap-1 overflow-x-auto pb-3 lg:pb-0 scrollbar-none snap-x -mx-4 px-4 lg:mx-0 lg:px-0">
+            <div className="flex flex-wrap lg:flex-col gap-2 lg:gap-1.5 pb-2 lg:pb-0">
               <button
                 onClick={() => {
                   setActiveCategory('all');
                   setSearchQuery('');
                 }}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 snap-start flex-shrink-0 cursor-pointer ${
+                className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
                   activeCategory === 'all' && searchQuery === ''
                     ? 'bg-neutral-900 text-white shadow-md'
                     : 'bg-white text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 border border-neutral-200/60 shadow-sm'
@@ -215,7 +215,7 @@ const App: React.FC = () => {
                       setActiveCategory(category.id);
                       setSearchQuery('');
                     }}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 snap-start flex-shrink-0 cursor-pointer text-left lg:w-full ${
+                    className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer text-left lg:w-full ${
                       isActive
                         ? 'bg-neutral-900 text-white shadow-md'
                         : 'bg-white text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 border border-neutral-200/60 shadow-sm'
@@ -224,9 +224,7 @@ const App: React.FC = () => {
                     <span className="flex-shrink-0">
                       {getIcon(category.iconName, "w-4 h-4")}
                     </span>
-                    <div className="truncate">
-                      <span className="block truncate">{category.title}</span>
-                    </div>
+                    <span className="block truncate">{category.title}</span>
                   </button>
                 );
               })}
@@ -246,7 +244,7 @@ const App: React.FC = () => {
 
           {/* Accordion Content - Right Side (8 Cols) */}
           <div className="lg:col-span-8">
-            <div className="bg-white/40 border border-neutral-200/60 rounded-3xl p-5 sm:p-8 shadow-sm">
+            <div className="bg-white/40 border border-neutral-200/60 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-sm">
               <div className="mb-6">
                 <h2 className="text-xl sm:text-2xl font-black text-neutral-900 tracking-tight">
                   {searchQuery ? "Search Results" : activeCategory === 'all' ? "All Frequently Asked Questions" : supportData.find(c => c.id === activeCategory)?.title}
