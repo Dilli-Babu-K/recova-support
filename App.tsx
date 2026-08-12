@@ -22,69 +22,141 @@ import { motion, AnimatePresence } from 'motion/react';
 const supportData: SupportCategory[] = [
   {
     id: "general",
-    title: "General Recovery Questions",
+    title: "Daily Recovery Readiness Score & Color Indicators",
     iconName: "Activity",
     description: "Understand your score and baseline calculations.",
     items: [
       {
-        question: "How is my Recovery Score calculated?",
-        answer: "Your Recovery Score evaluates three main daily pillars:\n\n1.  **Subjective Sleep Quality:** How rested you feel (Poor, Okay, Good).\n2.  **Training Intensity:** The cardiovascular or muscle stress logged from yesterday's training.\n3.  **Chronic Load Baseline:** Your physical adaptations over time, calculated continuously."
-      },
-      {
-        question: "Why is my recovery baseline locked?",
-        answer: "If you are a new user, you will enter a **Calibration Phase** for your first day. You must log at least one physical training session to establish your starting baseline before the active Recovery Score calculations begin."
+        question: "How does Recova calculate my daily Recovery Readiness Score?",
+        answer: "Your daily Recovery Score is computed on a 0–100% scale every morning. Recova's engine blends two fundamental biological signals:\n\n*   **Training Load Strain (Yesterday):** The subjective intensity and duration of your previous workout session (\"Hard\", \"Moderate\", or \"Rest\").\n*   **Sleep Quality & Restoration (Overnight):** Your total net sleep hours, subjective sleep quality (\"Poor\", \"Okay\", \"Good\"), and night awakenings (WASO).\n\nThe resulting score reflects your physical readiness for strain today:\n\n*   **High Readiness (Green Zone | 80%–100%):** Your central nervous system and muscles are well-rested. Optimal day for heavy strength training, high-intensity intervals, or peak athletic performance.\n*   **Moderate Readiness (Yellow Zone | 50%–79%):** Moderate fatigue detected. Suitable for steady-state training, moderate weights, or skill practice.\n*   **Low Readiness / High Strain (Red Zone | 0%–49%):** Significant fatigue or sleep debt detected. Recommended to prioritize active recovery, mobility work, light walking, or full rest."
       }
     ]
   },
   {
-    id: "syncing",
-    title: "Automatic Sleep Syncing",
+    id: "training",
+    title: "Training Workload & Exercise Logging",
+    iconName: "Activity",
+    description: "Learn how to record and manage your training sessions.",
+    items: [
+      {
+        question: "How do I log my training sessions?",
+        answer: "Each evening or during your morning check-in, Recova prompts you to record your training workload for the day:\n\n1.  **Select your primary training category** (e.g., Strength/Weightlifting, Endurance/Running, Calisthenics/Bodyweight, Combat Sports, or Functional Fitness).\n2.  **Rate your subjective training intensity:**\n    *   **Hard:** Heavy compound lifting, exhaustive cardio, or high muscular fatigue.\n    *   **Moderate:** Standard gym session, moderate pace, controlled effort.\n    *   **Rest / Recovery:** Light mobility, active walking, or complete rest day."
+      },
+      {
+        question: "What happens if I forget to log yesterday's training?",
+        answer: "When you open Recova in the morning, the app will gently display a training catch-up prompt first. Once you confirm yesterday's training intensity, your Recovery Score for today is calculated instantly."
+      }
+    ]
+  },
+  {
+    id: "sleep-tracking",
+    title: "Sleep Duration Tracking & Google Sleep API Setup",
     iconName: "Moon",
-    description: "Connect devices & understand automation.",
+    description: "Understand automatic sleep predictions and manual adjustments.",
     items: [
       {
-        question: "How does automatic Sleep Sync work?",
-        answer: "When you opt in to \"Devices & Sync\" (under the More tab), Recova requests physical activity permissions. It connects to your device's on-device movement sensors and Google Play Services Sleep API to detect when your body fell asleep and woke up, eliminating the need to log sleep hours manually."
+        question: "How does automatic sleep tracking work without a smartwatch or wearable?",
+        answer: "Recova utilizes Google Play Services Sleep API fused with an on-device 5-Layer Algorithmic Engine. By evaluating local phone motion micro-epochs and ambient light levels, Recova detects when you fall asleep and when you wake up—with zero uncomfortable chest straps or wearable devices required."
       },
       {
-        question: "Why does my sleep display show \"Analyzing...\"?",
-        answer: "Your phone syncs and processes your activity profile during the morning hours. If the system is still compiling your motion data, Recova displays \"Analyzing...\" to prevent displaying incorrect empty results. If the data is still loading, it will unlock to manual entry at **10:00 AM local time**."
+        question: "Best practices for 100% accurate automatic sleep predictions:",
+        answer: "*   **Bedside Phone Placement:** Place your mobile phone stationary on a nightstand, bedside table, or mattress edge within arm's reach of where you sleep. (Avoid leaving your phone in another room or on a far desk while watching TV).\n*   **Single Consistent Room:** Sleep in a consistent, dark, quiet room.\n*   **Screen Face Down:** Turn off your phone screen or place it face down. Dark environments allow the light sensors to lock onto bedtime onset significantly faster.\n*   **Morning Phone Interaction:** Upon waking up, pick up or unlock your phone. Recova requires approximately 5 to 15 minutes of continuous morning motion to verify that your sleep segment has officially ended."
       },
       {
-        question: "Why did my first sleep sync take 24 hours?",
-        answer: "On-device sensor tracking needs a full 24-hour baseline cycle of movement monitoring to calibrate your wake and bedtime predictions. Once your phone records this initial cycle, automated syncs will occur daily in the morning."
+        question: "Manual Sleep Confirmation & Edit Limits",
+        answer: "You always retain full control. Every morning, you can review, adjust, or manually input your bedtime and waketime before saving. To prevent database desynchronization and log corruption, manual adjustments to a saved daily sleep session are limited to **TWO (2) manual edits per calendar day**."
       }
     ]
   },
   {
-    id: "entry-limits",
-    title: "Manual Entry & Edit Limits",
+    id: "prediction-timing",
+    title: "Understanding \"Analyzing Sleep...\" & Prediction Timing",
+    iconName: "Moon",
+    description: "Learn about the morning analysis phase.",
+    items: [
+      {
+        question: "Why does my app show \"Analyzing Sleep...\" in the morning, and when will it vanish?",
+        answer: "**Why it appears:** Google Sleep API evaluates sleep in 10-minute micro-epochs. When you first wake up, Recova's 5-Layer Engine enters an evaluation phase to verify that your sleep segment meets minimum gross duration guidelines (3.0+ hours) and falls within the valid morning wake window (Solar Gate).\n\n**When it vanishes:**\n*   **Prediction Publication:** As soon as the 5-Layer Engine verifies your sleep prediction (typically 5 to 15 minutes after you wake up and move your phone), your Recovery Score is published and the status updates to your Sleep Summary.\n*   **Manual Confirmation:** Tapping the card to manually confirm your sleep times clears \"Analyzing Sleep...\" immediately.\n*   **Automatic Noon Cutoff:** If no valid sleep event is detected, the status clears automatically at 12:00 PM (noon)."
+      }
+    ]
+  },
+  {
+    id: "dual-card",
+    title: "The Dual-Card Science Engine",
     iconName: "Sliders",
-    description: "Adjust bedtime and track parameters.",
+    description: "Explore the insights on Cards 1 & 2.",
     items: [
       {
-        question: "How do I adjust incorrect sleep times?",
-        answer: "If the automatic prediction or your manual entry is slightly off, tap the **\"Incorrect? Adjust sleep times\"** link underneath the sleep card on your dashboard. This lets you enter manual bedtimes and waketimes."
+        question: "What is Card 1 (Comparative Sleep Benchmarks)?",
+        answer: "Card 1 compares your overnight sleep duration against curated biological, athletic, and space-science baselines:\n\n*   **Mammalian & Athletic Entities:** Compares your rest against baselines (e.g. Professional Footballer, NASA Astronaut, Lion, Sloth, Kiwi, Panda, Ronaldo).\n*   **Smart Rotation System:** Uses a 4-day anti-repetition rotation guard so you see fresh, engaging comparative benchmarks every morning."
       },
       {
-        question: "Why did the \"Adjust sleep times\" button disappear?",
-        answer: "To maintain database consistency and prevent redundant server writes, manual sleep duration changes are limited:\n\n*   **If starting from Google Sleep API:** You can adjust the times **2 times** per day.\n*   **If starting from Empty (`--`):** You can log your initial times, and then adjust those times **2 times** per day.\n*   Once you save your second adjustment, the edit button hides for the remainder of the day."
+        question: "What is Card 2 (Science Recovery Protocols)?",
+        answer: "Card 2 detects specific sleep anomalies in your telemetry (such as high night awakenings/WASO, acute sleep debt, or circadian phase shift) and automatically prescribes actionable recovery protocols:\n\n*   **Examples:** Thermoregulatory room cooling protocols, GABA precursor nutritional guidance, photic blue-light shields, or circadian anchor walks."
       }
     ]
   },
   {
-    id: "account-data",
-    title: "Account & Data Support",
-    iconName: "User",
-    description: "Sync devices and manage records safely.",
+    id: "history-sync",
+    title: "Streaks, History Graphs & Data Syncing",
+    iconName: "Activity",
+    description: "Track your progress and sync across devices.",
     items: [
       {
-        question: "Will my sleep duration affect my Recovery Score?",
-        answer: "No. Your Recovery Score is calculated using your subjective sleep *quality* (Poor/Okay/Good) and training workloads. Sleep *duration* (hours/minutes) is tracked as historical metadata to help you visualize sleep schedules, but it will never override your core recovery math."
+        question: "How do streaks and history tracking work?",
+        answer: "*   **Logging Streaks:** Every consecutive day you log your training and sleep, your daily streak increases.\n*   **History Trends:** View monthly sleep averages, training load patterns, and recovery readiness trends over time to identify overtraining or chronic fatigue.\n*   **Multi-Device Sync:** When logged into your Google Account, your daily recovery summaries, streaks, and training logs are encrypted and synchronized via Firebase Firestore."
+      }
+    ]
+  },
+  {
+    id: "security",
+    title: "Account Security, Permissions & Battery",
+    iconName: "ShieldCheck",
+    description: "Manage permissions and ensure background tracking.",
+    items: [
+      {
+        question: "Why does Recova ask for Physical Activity permission?",
+        answer: "Physical activity permission allows Android's Google Sleep API to access local motion sensors to detect bedtime and wake times 100% locally on your phone's processor."
       },
       {
-        question: "How do I sync data across multiple devices?",
-        answer: "Data syncs automatically through the cloud. As long as you log into the App using the same Google Account on both devices, your logs, streaks, and recovery scores will sync instantly."
+        question: "STEP-BY-STEP BATTERY OPTIMIZATION GUIDE (Crucial for Android Users)",
+        answer: "Android manufacturers (Samsung, Xiaomi, OnePlus, Pixel, Huawei) enforce background battery optimization that can freeze Recova's background sleep receivers.\n\nTo ensure fast, reliable sleep notifications every morning:\n\n1.  Open phone **System Settings > Apps > See All Apps > Recova**.\n2.  Select **Battery** (or Battery Usage / Battery Saver).\n3.  Change the setting from \"Optimized\" or \"Restricted\" to **\"Unrestricted\"** (or \"Don't Optimize\" / \"No Restrictions\").\n4.  Verify Physical Activity is set to \"Allow\" under **Settings > Apps > Recova > Permissions**."
+      },
+      {
+        question: "Is my raw sensor data uploaded to the cloud or sold?",
+        answer: "**NO.** Continuous raw accelerometer motion and light readings are evaluated 100% locally on your phone's CPU and are NEVER uploaded to cloud servers or sold to third parties. Only your final confirmed daily summary (total hours, bedtime, wake time) is saved in Google Firebase Firestore under your private account."
+      }
+    ]
+  },
+  {
+    id: "account-deletion",
+    title: "Account & Data Deletion Guide",
+    iconName: "User",
+    description: "How to manage your account status.",
+    items: [
+      {
+        question: "How do I permanently delete my account and data?",
+        answer: "You have full control over your data:\n\n*   **In-App Deletion (Instant):** Go to **More > Privacy & Data > Delete Account** in Recova, and verify your Google Account. Your account profile, workout logs, and historical sleep records are immediately purged from our servers.\n*   **Web Email Deletion Request:** Email recova.app0@gmail.com with subject \"Account Deletion Request\" from your registered Google email address. Deletion is completed within 48 hours."
+      }
+    ]
+  },
+  {
+    id: "troubleshooting",
+    title: "Complete Technical Troubleshooting",
+    iconName: "Sliders",
+    description: "Solutions to common technical issues.",
+    items: [
+      {
+        question: "Sleep prediction notification did not appear in the morning.",
+        answer: "1. Confirm Battery Optimization is set to \"Unrestricted\".\n2. Ensure Physical Activity permission is granted.\n3. Pick up/unlock your phone in the morning to trigger the wake-up motion event."
+      },
+      {
+        question: "Notification alarms are silent or not triggering.",
+        answer: "Check **Android Settings > Notifications > Recova** and ensure notification channels are enabled."
+      },
+      {
+        question: "App shows offline mode.",
+        answer: "Recova features full offline capability! You can log sleep and view recovery scores offline. Logs will automatically sync to Firebase Firestore once an internet connection is restored."
       }
     ]
   }
@@ -140,13 +212,13 @@ const App: React.FC = () => {
         {/* Header */}
         <header className="mb-12 md:mb-16 text-center max-w-3xl mx-auto">
           <span className="text-xs font-bold uppercase tracking-widest text-neutral-400 mb-2 block">
-            Recova Support
+            Recova Support Center
           </span>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-neutral-900 mb-4 tracking-tight">
-            Help & Support
+            Comprehensive Help & Support
           </h1>
           <p className="text-base sm:text-lg text-neutral-600 leading-relaxed">
-            Find answers to common questions about using Recova, tracking your training, and managing your Sleep Sync connection.
+            Official Master Help Desk, User Guide & FAQ Portal. Below is the complete user guide and technical support reference covering every feature, algorithm, and setting in the Recova app.
           </p>
         </header>
 
