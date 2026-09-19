@@ -45,8 +45,8 @@ const supportData: SupportCategory[] = [
     description: "Guidance for phone sensor placement, accuracy best practices, and aligning sleep times.",
     items: [
       {
-        question: "How does automatic sleep tracking work without a smartwatch or wearable?",
-        answer: "Recova uses your phone's built-in motion, stillness, and ambient light sensors to automatically estimate when you fall asleep and when you wake up. Everything is evaluated **100% locally on your phone's processor**—with zero uncomfortable wristbands, rings, or chest straps required."
+        question: "How does automatic sleep tracking work without a wearable?",
+        answer: "Recova uses your phone's movement and surrounding-light signals to automatically estimate your sleep and wake times. Just keep your phone nearby while you sleep — no smartwatch, ring, or wearable is required."
       },
       {
         question: "How to get the most reliable sleep duration estimate:",
@@ -65,8 +65,12 @@ const supportData: SupportCategory[] = [
     description: "Why the morning evaluation phase appears and when your sleep summary updates.",
     items: [
       {
-        question: "Why does my app show \"Analyzing Sleep...\" in the morning, and when will it update?",
-        answer: "* **Why it appears:** When you first wake up, Recova takes a brief window to confirm that your sleep period has genuinely concluded and that you are up for the day, rather than just shifting in bed or briefly checking the clock.\n* **When it updates:**\n  * **Automatic Morning Update:** Typically within 15 to 60 minutes of normal morning phone activity, your sleep duration estimate and morning Recovery Score are published.\n  * **Instant Confirmation:** You can tap the sleep card at any time to confirm your rest window immediately without waiting.\n  * **Noon Cutoff:** If no overnight rest window was detected, the status clears automatically at 12:00 PM (noon)."
+        question: "Why is Recova showing \"Analysing\" but not showing my sleep result?",
+        answer: "Recova needs to run in the background to receive and process your sleep data. Some Android phones restrict background activity to save battery, which can prevent Recova from completing your sleep analysis.\n\n1. **Allow Recova to run without background power restrictions:**\n   * Open your phone's *Settings → Battery → Background power consumption / Background power management / Background activity*\n   * Find **Recova** and change its setting to: **Don't restrict background power usage** (or *No restrictions / Unrestricted*).\n   * *Note:* This setting is important because some phones use a separate background power-management system that can restrict Recova even when its App Battery setting is unrestricted.\n\n2. **Remove battery restrictions from Recova:**\n   * Open *Settings → Apps → Recova → Battery*\n   * Choose: **Unrestricted** (or *Allow background activity / Don't optimize*).\n\n3. **Allow Auto-start when available:**\n   * Some phones have *Auto-start* or *Auto-launch* settings. Make sure **Recova** is enabled.\n\n> **Important:** The exact settings and menu names vary depending on your phone brand, model, and Android version. You may see *Background power consumption*, *Background activity*, *Battery optimization*, *Battery usage*, *Auto-start*, or similar options. For the most reliable sleep analysis, make sure Recova is not restricted by either the phone's Background Power Management or its individual App Battery settings."
+      },
+      {
+        question: "Why does Recova show \"Analysing\" in the morning, and when will it update?",
+        answer: "* **Why it appears:** When you first wake up, Recova takes a brief window to confirm that your sleep period has genuinely concluded and that you are up for the day, rather than just shifting in bed or briefly checking the clock.\n* **Automatic Morning Update:** Typically within 15 to 60 minutes of normal morning phone activity, your sleep duration estimate and morning Recovery Score are published.\n* **Noon Cutoff:** If no overnight rest window was detected, the status clears automatically at 12:00 PM (noon)."
       }
     ]
   },
@@ -138,7 +142,7 @@ const supportData: SupportCategory[] = [
     items: [
       {
         question: "Issue: Sleep prediction did not appear in the morning.",
-        answer: "**Solution:**\n1. Ensure **Physical Activity** permission is set to \"Allow\" in your phone's *Settings > Apps > Recova > Permissions*.\n2. Pick up and use your phone normally for a few minutes in the morning so your device registers that you are awake.\n3. Open Recova and tap **Check In** to confirm or align your sleep duration immediately."
+        answer: "**Solution:**\n\n1. Ensure **Physical Activity** permission is set to “Allow” in your phone's *Settings → Apps → Recova → Permissions*.\n2. Pick up and use your phone normally for a few minutes in the morning so your device registers that you are awake.\n3. Make sure Recova is allowed to run without background restrictions. Go to your phone's **Battery** settings and look for *Background power consumption / Background activity / Background app management*. Find **Recova** and select **“Don't restrict,” “No restrictions,”** or **“Unrestricted,”** depending on your device.\n4. Also check *Settings → Apps → Recova → Battery* and select **“Unrestricted”** or the equivalent option, if available.\n\n> **Note:** Battery and background settings can have different names and locations depending on your phone brand and Android version."
       },
       {
         question: "Issue: Notification reminders are silent or not triggering.",
