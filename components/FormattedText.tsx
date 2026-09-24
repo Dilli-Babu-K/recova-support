@@ -46,31 +46,61 @@ export const FormattedText: React.FC<FormattedTextProps> = ({ content }) => {
     return parts;
   };
 
-  // Process block by block
+  // Process line by line with support for hierarchical lists and sub-items
+  interface ListItemData {
+    number?: number;
+    text: React.ReactNode[];
+    subItems?: React.ReactNode[][];
+  }
+
+  interface BlockList {
+    type: 'ol' | 'ul';
+    start?: number;
+    items: ListItemData[];
+  }
+
   const lines = content.split('\n');
   const blocks: React.ReactNode[] = [];
-  let currentList: { type: 'ul' | 'ol'; items: React.ReactNode[] } | null = null;
+  let activeList: BlockList | null = null;
 
   const flushList = () => {
-    if (currentList) {
-      if (currentList.type === 'ul') {
+    if (activeList) {
+      if (activeList.type === 'ul') {
         blocks.push(
-          <ul key={`ul-${blocks.length}`} className="list-disc list-outside pl-4 sm:pl-5 space-y-1.5 my-2.5 text-neutral-700 break-words">
-            {currentList.items.map((item, i) => (
-              <li key={i} className="break-words">{item}</li>
+          <ul key={`ul-${blocks.length}`} className="list-disc list-outside pl-4 sm:pl-5 space-y-2 my-2.5 text-neutral-700 break-words">
+            {activeList.items.map((item, i) => (
+              <li key={i} className="break-words">
+                <div>{item.text}</div>
+                {item.subItems && item.subItems.length > 0 && (
+                  <ul className="list-disc list-outside pl-4 sm:pl-5 space-y-1.5 mt-1.5 text-neutral-600">
+                    {item.subItems.map((sub, j) => (
+                      <li key={j} className="break-words">{sub}</li>
+                    ))}
+                  </ul>
+                )}
+              </li>
             ))}
           </ul>
         );
       } else {
         blocks.push(
-          <ol key={`ol-${blocks.length}`} className="list-decimal list-outside pl-4 sm:pl-5 space-y-1.5 my-2.5 text-neutral-700 break-words">
-            {currentList.items.map((item, i) => (
-              <li key={i} className="break-words">{item}</li>
+          <ol key={`ol-${blocks.length}`} start={activeList.start || 1} className="list-decimal list-outside pl-4 sm:pl-5 space-y-3 my-2.5 text-neutral-700 break-words">
+            {activeList.items.map((item, i) => (
+              <li key={i} value={item.number} className="break-words font-normal">
+                <div>{item.text}</div>
+                {item.subItems && item.subItems.length > 0 && (
+                  <ul className="list-disc list-outside pl-4 sm:pl-5 space-y-1.5 mt-2 text-neutral-600">
+                    {item.subItems.map((sub, j) => (
+                      <li key={j} className="break-words">{sub}</li>
+                    ))}
+                  </ul>
+                )}
+              </li>
             ))}
           </ol>
         );
       }
-      currentList = null;
+      activeList = null;
     }
   };
 
@@ -78,7 +108,35 @@ export const FormattedText: React.FC<FormattedTextProps> = ({ content }) => {
     const line = rawLine.trim();
 
     if (!line) {
+      return;
+    }
+
+    // Headings (H2 / H3)
+    if (line.startsWith('### ')) {
       flushList();
+      const headingText = line.replace(/^###\s+/, '');
+      const isImportant = headingText.toLowerCase().includes('important');
+      blocks.push(
+        <h4 
+          key={`h3-${index}`} 
+          className={`font-bold text-sm sm:text-base mt-4 mb-2 pt-2 border-t border-neutral-200/80 first:border-0 first:mt-1 ${
+            isImportant ? 'text-amber-900 bg-amber-50/80 -mx-1 sm:-mx-2 px-2.5 py-1.5 rounded-lg border-l-4 border-l-amber-500 border-t-0' : 'text-neutral-900'
+          }`}
+        >
+          {parseInline(headingText)}
+        </h4>
+      );
+      return;
+    }
+
+    if (line.startsWith('## ')) {
+      flushList();
+      const headingText = line.replace(/^##\s+/, '');
+      blocks.push(
+        <h3 key={`h2-${index}`} className="font-bold text-neutral-950 text-base sm:text-lg mt-4 mb-2">
+          {parseInline(headingText)}
+        </h3>
+      );
       return;
     }
 
@@ -87,32 +145,50 @@ export const FormattedText: React.FC<FormattedTextProps> = ({ content }) => {
       flushList();
       const quoteText = line.replace(/^>\s*/, '');
       blocks.push(
-        <div key={`quote-${index}`} className="border-l-2 border-neutral-300 pl-3 py-1 my-2 text-neutral-600 italic text-xs sm:text-sm bg-neutral-100/50 rounded-r break-words">
+        <div key={`quote-${index}`} className="border-l-2 border-neutral-300 pl-3 py-1 my-2.5 text-neutral-600 italic text-xs sm:text-sm bg-neutral-100/50 rounded-r break-words">
           {parseInline(quoteText)}
         </div>
       );
       return;
     }
 
-    // Bullet list: * or -
-    const bulletMatch = line.match(/^([*-])\s+(.*)/);
-    if (bulletMatch) {
-      if (!currentList || currentList.type !== 'ul') {
+    // Numbered list item: 1. or 2.
+    const numMatch = line.match(/^(\d+)\.\s+(.*)/);
+    if (numMatch) {
+      const numVal = parseInt(numMatch[1], 10);
+      if (!activeList || activeList.type !== 'ol') {
         flushList();
-        currentList = { type: 'ul', items: [] };
+        activeList = { type: 'ol', start: numVal, items: [] };
       }
-      currentList.items.push(parseInline(bulletMatch[2]));
+      activeList.items.push({
+        number: numVal,
+        text: parseInline(numMatch[2]),
+        subItems: [],
+      });
       return;
     }
 
-    // Numbered list: 1. or 2.
-    const numMatch = line.match(/^(\d+)\.\s+(.*)/);
-    if (numMatch) {
-      if (!currentList || currentList.type !== 'ol') {
-        flushList();
-        currentList = { type: 'ol', items: [] };
+    // Bullet list item: * or -
+    const bulletMatch = line.match(/^([*-])\s+(.*)/);
+    if (bulletMatch) {
+      // If we are currently inside an ordered list, attach this bullet as a subItem to the current numbered item!
+      if (activeList && activeList.type === 'ol' && activeList.items.length > 0) {
+        const lastIndex = activeList.items.length - 1;
+        if (!activeList.items[lastIndex].subItems) {
+          activeList.items[lastIndex].subItems = [];
+        }
+        activeList.items[lastIndex].subItems!.push(parseInline(bulletMatch[2]));
+        return;
       }
-      currentList.items.push(parseInline(numMatch[2]));
+
+      if (!activeList || activeList.type !== 'ul') {
+        flushList();
+        activeList = { type: 'ul', items: [] };
+      }
+      activeList.items.push({
+        text: parseInline(bulletMatch[2]),
+        subItems: [],
+      });
       return;
     }
 
