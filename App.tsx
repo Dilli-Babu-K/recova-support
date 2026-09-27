@@ -69,31 +69,10 @@ const supportData: SupportCategory[] = [
     description: "Why the morning evaluation phase appears and when your sleep summary updates.",
     items: [
       {
-        question: "Why is sleep duration \"Analysing\" but not showing any sleep result?",
-        answer: `Recova needs to run in the background to receive and process your sleep data. Some Android phones restrict background activity to save battery, which can prevent Recova from completing your sleep analysis.
+        question: "Why is Recova \"Analysing\" but not showing any sleep result?",
+        answer: `Recova needs to run in the background to receive and process your sleep data. On some Android phones, battery-saving and background-management features can restrict Recova, which may delay or prevent your sleep data from being received or processed normally.
 
-### 1. Allow Recova to run without background power restrictions
-
-Open your phone's **Settings** and look for the **battery or background-app settings**.
-
-Depending on your device, this may be called:
-
-**Background power consumption**
-**Background power management**
-**Background activity**
-**Background app management**
-or something similar.
-
-Find **Recova** and choose the **least restrictive option** available, such as:
-
-**Don't restrict**
-**No restrictions**
-**Unrestricted**
-**Allow background activity**
-
-**If your phone does not have a separate background-power setting, continue to the next step.**
-
-### 2. Remove battery restrictions from Recova
+### 1. Remove battery restrictions from Recova
 
 Open:
 
@@ -106,23 +85,44 @@ Choose the option that allows Recova to run freely in the background, such as:
 **Allow background activity**
 **Don't optimize**
 
+### 2. Allow Recova to run without background restrictions
+
+Some Android phones have a separate **background power or background-app management** setting in addition to the battery setting inside Recova.
+
+Open your phone's **Settings** and look for:
+
+**Background activity**
+**Background power management**
+**Background power consumption**
+**Background app management**
+or a similar setting.
+
+Find **Recova** and choose the least restrictive option available, such as:
+
+**Don't restrict**
+**No restrictions**
+**Unrestricted**
+**Allow background activity**
+
+**If your phone does not have a separate background setting, you can continue with the other steps.**
+
 ### 3. Allow Auto-start when available
 
-Some Android phones have an additional **Auto-start** or **Auto-launch** setting.
+Some phones provide an **Auto-start** or **Auto-launch** setting for apps.
 
-Find **Recova** and make sure Auto-start or Auto-launch is **enabled**.
+If your phone has this option, make sure **Recova is enabled**.
 
-**This setting is not available on every device.**
+### 4. Keep Recova available in the background
+
+Avoid manually **force-stopping** Recova, and keep **Sleep Tracking** enabled.
+
+For reliable automatic sleep analysis, your phone should remain **powered on** while you sleep.
 
 ### Important
 
-The exact settings and menu names vary depending on your **phone brand, model, and Android version**.
+Android settings vary by **phone brand, model, and Android version**. Some devices have additional background-power controls, while others only provide the standard app battery setting. You may see different names such as **Battery optimization, Background activity, Background power management, Battery usage, Auto-start,** or **Auto-launch**.
 
-You may see options such as **Background power consumption, Background activity, Battery optimization, Battery usage, Auto-start, Auto-launch**, or similar settings.
-
-**Some phones have a separate background-power management setting in addition to the battery setting inside Recova's App Info. Make sure Recova is not restricted in either location.**
-
-For reliable automatic sleep analysis, allow Recova to run in the background without unnecessary battery restrictions.`
+**You do not need every setting listed above. The goal is to make sure Recova is allowed to run in the background without being restricted by your phone.**`
       },
       {
         question: "Why does Recova show \"Analysing\" in the morning, and when will it update?",
