@@ -118,6 +118,18 @@ Avoid manually **force-stopping** Recova, and keep **Sleep Tracking** enabled.
 
 For reliable automatic sleep analysis, your phone should remain **powered on** while you sleep.
 
+### 5. Still having trouble?
+
+Some Android devices have additional background and battery restrictions that vary by device and Android version.
+
+For device-specific guidance on allowing apps to run reliably in the background:
+
+View device-specific instructions →
+
+Link: https://dontkillmyapp.com/
+
+Don't Kill My App provides device-specific guidance for many Android vendors, including **Vivo, Samsung, Xiaomi, OnePlus, OPPO, realme, Motorola**, and others.
+
 ### Important
 
 Android settings vary by **phone brand, model, and Android version**. Some devices have additional background-power controls, while others only provide the standard app battery setting. You may see different names such as **Battery optimization, Background activity, Background power management, Battery usage, Auto-start,** or **Auto-launch**.

@@ -6,9 +6,9 @@ interface FormattedTextProps {
 
 export const FormattedText: React.FC<FormattedTextProps> = ({ content }) => {
   const parseInline = (text: string): React.ReactNode[] => {
-    // Splits text with bold (**text**), italics (*text*), and code (`text`)
+    // Splits text with markdown links ([title](url)), bare URLs (https://...), bold (**text**), italics (*text*), and code (`text`)
     const parts: React.ReactNode[] = [];
-    const regex = /(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g;
+    const regex = /(\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|https?:\/\/[^\s<)"]+|\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g;
     let lastIndex = 0;
     let match: RegExpExecArray | null;
 
@@ -17,7 +17,36 @@ export const FormattedText: React.FC<FormattedTextProps> = ({ content }) => {
         parts.push(text.substring(lastIndex, match.index));
       }
       const token = match[0];
-      if (token.startsWith('**') && token.endsWith('**')) {
+      if (token.startsWith('[') && token.includes('](')) {
+        const linkMatch = token.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/);
+        if (linkMatch) {
+          parts.push(
+            <a 
+              key={match.index} 
+              href={linkMatch[2]} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-blue-600 hover:text-blue-800 underline font-semibold transition-colors inline-flex items-center gap-0.5"
+            >
+              {linkMatch[1]}
+            </a>
+          );
+        } else {
+          parts.push(token);
+        }
+      } else if (token.startsWith('http://') || token.startsWith('https://')) {
+        parts.push(
+          <a 
+            key={match.index} 
+            href={token} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-blue-600 hover:text-blue-800 underline font-semibold transition-colors break-all"
+          >
+            {token}
+          </a>
+        );
+      } else if (token.startsWith('**') && token.endsWith('**')) {
         parts.push(
           <strong key={match.index} className="font-semibold text-neutral-900">
             {token.slice(2, -2)}
